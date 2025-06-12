@@ -3,10 +3,12 @@ import Image from "next/image";
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Authentication } from "./Authentication";
-import { useAuthContex } from "../provider";
+import { useAuthContext } from "../provider";
+import Link from "next/link";
 
 export const Header = () => {
-  const { user } = useAuthContex();
+  const { user } = useAuthContext();
+  
   return (
     <div className=" flex items-center justify-between p-4">
       {" "}
@@ -25,7 +27,7 @@ export const Header = () => {
             <Button>Dashboard</Button>
           </Link>{" "}
           <Image
-            src={user.photoURL}
+            src={user?.photoURL}
             height={40}
             width={40}
             alt="profile"
