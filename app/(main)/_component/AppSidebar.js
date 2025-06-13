@@ -43,11 +43,13 @@ export const AppSidebar = () => {
         <SidebarGroup />
         <SidebarGroupContent>
         <div className="flex text-center mx-5 mt-10">
+          <Link href={"/create-new-video"}>
           <Button className="W-full">+ Create New Video</Button>
+          </Link>
         </div>
         <SidebarMenu>
       {MenuItems.map((menu,index)=>(
-        <SidebarMenuItem className='mt-3'>
+        <SidebarMenuItem className='mt-3' key={index}>
           <SidebarMenuButton className='px-8 py-5' isActive={path===menu?.url?true:false}>
             <Link href={menu?.url} className="flex gap-4 items-center w-full">
             <menu.icon/>
