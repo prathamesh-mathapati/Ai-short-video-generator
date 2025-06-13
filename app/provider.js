@@ -20,6 +20,7 @@ export const Provider = ({ children }) => {
         email:user?.email,
         pictureURL:user?.photoURL
       })
+       setUser(result)
     });
     return () => unsubscribe();
   }, []);

@@ -27,7 +27,7 @@ export const Header = () => {
             <Button>Dashboard</Button>
           </Link>{" "}
           <Image
-            src={user?.photoURL}
+            src={user?.photoURL || "/profile.png"}
             height={40}
             width={40}
             alt="profile"
