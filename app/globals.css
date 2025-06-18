@@ -144,3 +144,9 @@
     --sidebar-ring: oklch(0.439 0 0);
   }
 }
+button{
+cursor: pointer;
+}
+.bg-secondary{
+    background-color: #2f2f2f;
+}
