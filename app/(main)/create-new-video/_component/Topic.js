@@ -100,7 +100,7 @@ export const Topic = ({ onHandleInputChange }) => {
               <div
                 key={index}
                 className={`p-3 border rounded-lg mt-1 cursor-pointer ${selectedScriptIndex === index && "bg-secondary border-gray-200"}`}
-                onClick={() => setSelectedScriptIndex(index)}
+                onClick={() => {setSelectedScriptIndex(index), onHandleInputChange("script", item.content)}}
               >
                 <h2 className=" line-clamp-4 text-sm text-gray-300 ">
                   {item.content}

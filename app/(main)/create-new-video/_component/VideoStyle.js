@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React, { useState } from "react";
-const options = [
+export const options = [
   {
     url: "/realistic.webp",
     name: "realistic",
@@ -43,6 +43,7 @@ export const VideoStyle = ({ onHandleInputChange }) => {
       <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
         {options?.map((option, index) => (
           <div
+            key={index}
             className="relative"
             onClick={() => {
               setSelectedStyle(option.name);
