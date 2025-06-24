@@ -1,19 +1,37 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
 import React, { useState } from "react";
 const voiceOption = [
+  { value: "us_alloy", name: "🇺🇸 Alloy (Female)" },
+  { value: "us_aoede", name: "🇺🇸 Aoede (Female)" },
+  { value: "us_bella", name: "🇺🇸 Bella (Female)" },
+  { value: "us_jessica", name: "🇺🇸 Jessica (Female)" },
+  { value: "us_kore", name: "🇺🇸 Kore (Female)" },
+  { value: "us_nicole", name: "🇺🇸 Nicole (Female)" },
+  { value: "us_nova", name: "🇺🇸 Nova (Female)" },
+  { value: "us_river", name: "🇺🇸 River (Female)" },
   { value: "us_sarah", name: "🇺🇸 Sarah (Female)" },
   { value: "us_sky", name: "🇺🇸 Sky (Female)" },
   { value: "us_adam", name: "🇺🇸 Adam (Male)" },
-  { value: "in_alpha", name: "🇮🇳 Alpha (Female)" },
-  { value: "in_beta", name: "🇮🇳 Beta (Female)" },
-  { value: "in_omega", name: "🇮🇳 Omega (Male)" },
-  { value: "in_psi", name: "🇮🇳 Psi (Male)" },
-  { value: "us_echo", name: "🇺🇸 Echo (Male)" },
-  { value: "us_eric", name: "🇺🇸 Eric (Male)" },
-  { value: "us_fenrir", name: "🇺🇸 Fenrir (Male)" },
-  { value: "us_liam", name: "🇺🇸 Liam (Male)" },
-  { value: "us_michael", name: "🇺🇸 Michael (Male)" },
-  { value: "us_onyx", name: "🇺🇸 Onyx (Male)" },
+  { value: "am_echo", name: "🇺🇸 Echo (Male)" },
+  { value: "am_eric", name: "🇺🇸 Eric (Male)" },
+  { value: "am_fenrir", name: "🇺🇸 Fenrir (Male)" },
+  { value: "am_liam", name: "🇺🇸 Liam (Male)" },
+  { value: "am_michael", name: "🇺🇸 Michael (Male)" },
+  { value: "am_onyx", name: "🇺🇸 Onyx (Male)" },
+  { value: "am_puck", name: "🇺🇸 Puck (Male)" },
+  { value: "bf_alice", name: "Alice (Female)" },
+  { value: "bf_emma", name: "Emma (Female)" },
+  { value: "bf_isabella", name: "Isabella (Female)" },
+  { value: "ff_siwis", name: "🇫🇷 Siwis (Female)" },
+  { value: "hf_alpha", name: "🇮🇳 Alpha (Female)" },
+  { value: "hf_beta", name: "🇮🇳 Beta (Female)" },
+  { value: "hm_omega", name: "🇮🇳 Omega (Male)" },
+  { value: "hm_psi", name: "🇮🇳 Psi (Male)" },
+  { value: "aura-asteria-en", name: "🇺🇸 Asteria (Female)" },
+  { value: "aura-luna-en", name: "🇺🇸 Luna (Female)" },
+  { value: "aura-stella-en", name: "🇺🇸 Stella (Female)" },
+  { value: "aura-athena-en", name: "🇬🇧 Athena (Female)" },
+  { value: "aura-hera-en", name: "🇺🇸 Hera (Female)" },
 ];
 export const Voice = ({ onHandleInputChange }) => {
   const [selectedVoiceOption, setSelectedVoiceOption] = useState("");
@@ -29,7 +47,7 @@ export const Voice = ({ onHandleInputChange }) => {
               key={index}
               className={`cursor-pointer p-3 dark:bg-slate-900 dark:border-white hover:border rounded-lg ${selectedVoiceOption===option.name&&"border"}`}
               onClick={() => {
-                onHandleInputChange("voice", option.name),
+                onHandleInputChange("voice", option.value),
                   setSelectedVoiceOption(option.name);
               }}
             >

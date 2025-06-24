@@ -18,12 +18,13 @@ export const Provider = ({ children }) => {
       const result= await CreateUser({
         name:user?.displayName,
         email:user?.email,
-        pictureURL:user?.photoURL
+        pictureURL:user?.pictureURL
       })
        setUser(result)
     });
     return () => unsubscribe();
   }, []);
+  
   return (
     <div >
       <AuthContext.Provider value={{ user }}>
