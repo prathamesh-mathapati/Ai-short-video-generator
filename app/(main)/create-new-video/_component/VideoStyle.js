@@ -57,7 +57,7 @@ export const VideoStyle = ({ onHandleInputChange }) => {
               height={120}
               className={`object-cover h-[90px] lg:h-[130px] xl:h-[180px] rounded-lg p-1 hover:border border-gray-300 cursor-pointer w-full ${selectedStyle == option.name && "border"}`}
             />
-            <h2 className=" absolute bottom-1 text-center w-full">
+            <h2 className="absolute bottom-1 text-center w-full">
               {option?.name}
             </h2>
           </div>
