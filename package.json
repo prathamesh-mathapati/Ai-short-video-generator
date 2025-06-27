@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@deepgram/sdk": "^4.7.0",
     "@google/genai": "^1.5.1",
     "@radix-ui/react-dialog": "^1.1.14",
     "@radix-ui/react-scroll-area": "^1.2.9",
@@ -20,6 +21,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "convex": "^1.24.8",
+    "dotenv": "^16.6.0",
     "firebase": "^11.9.0",
     "inngest": "^3.39.2",
     "lucide-react": "^0.513.0",

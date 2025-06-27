@@ -5,7 +5,7 @@ export const CreateNewUser = mutation({
   args: {
     name: v.string(),
     email: v.string(),
-    pictureURL: v.string(),
+  pictureURL: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
     const user = await ctx.db
@@ -14,15 +14,16 @@ export const CreateNewUser = mutation({
       .collect();
 
     if (!user[0]?.email) {
-        const userData={
-        name: args?.name,
-        email: args?.email,
-        pictureURL: args?.pictureURL,
-        credits: 3,
-      }
-      const result = await ctx.db.insert("users", userData);
+      const userData = {
+        name: args.name,
+        email: args.email,
+        pictureURL: args.pictureURL,
+        credits: 3, // ✅ Set internally
+      };
+      await ctx.db.insert("users", userData);
       return userData;
     }
+
     return user[0];
   },
 });
