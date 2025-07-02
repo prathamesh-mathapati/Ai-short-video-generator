@@ -2,6 +2,8 @@ import axios from "axios";
 import { inngest } from "./client";
 import { createClient } from "@deepgram/sdk";
 import ImagePromptFunction from "@/configs/Aimodes";
+import { ConvexHttpClient } from "convex/browser";
+import { api } from "@/convex/_generated/api";
 
 const ImagePromptScript = `Generate Image prompt of {style} style with all deatils for each scene for 30 seconds video : script: {script}
 Just Give specifing image prompt depends on the story line
@@ -30,90 +32,105 @@ export const GenerateVideoData = inngest.createFunction(
   { id: "my-app-generate-video-data" },
   { event: "generate-video-data" },
   async ({ event, step }) => {
-    const { script, voice, videoStyle } = event?.data;
+    const { script, voice, videoStyle, recordId } = event?.data;
+    const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL);
 
     //  Make API call to generate audio
-    const GenerateAudioFile = await step.run("generate-video-data", async () => {
-      const result = await axios.post(
-        `${BASE_URL}/api/text-to-speech`,
-        {
-          input: script,
-          voice: voice,
-        },
-        {
-          headers: {
-            "x-api-key": process.env.NEXT_PUBLIC_AI_GURU_LAB,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      console.log(result.data.audio)
+    // const GenerateAudioFile = await step.run("generate-video-data", async () => {
+    //   const result = await axios.post(
+    //     `${BASE_URL}/api/text-to-speech`,
+    //     {
+    //       input: script,
+    //       voice: voice,
+    //     },
+    //     {
+    //       headers: {
+    //         "x-api-key": process.env.NEXT_PUBLIC_AI_GURU_LAB,
+    //         "Content-Type": "application/json",
+    //       },
+    //     }
+    //   );
 
-      return result.data.audio
-    });
+    //   return result.data.audio
+    // });
 
     // Make API captions to deepgram
-    const GenerateCaptions = await step.run("generate-caption-data", async () => {
-      const deepgram = createClient(process.env.NEXT_PUBLIC_DEEPGRAM_API_KEY);
-      const { result, error } = await deepgram.listen.prerecorded.transcribeUrl(
-        {
-          url: GenerateAudioFile,
-        },
-        // STEP 3: Configure Deepgram options for audio analysis
-        {
-          model: "nova-3",
-          smart_format: true,
-        }
-      );
-      return result.results.channels[0].alternatives[0].words
-    })
+    // const GenerateCaptions = await step.run("generate-caption-data", async () => {
+    //   const deepgram = createClient(process.env.NEXT_PUBLIC_DEEPGRAM_API_KEY);
+    //   const { result, error } = await deepgram.listen.prerecorded.transcribeUrl(
+    //     {
+    //       url: GenerateAudioFile,
+    //     },
+    //     // STEP 3: Configure Deepgram options for audio analysis
+    //     {
+    //       model: "nova-3",
+    //       smart_format: true,
+    //     }
+    //   );
+    //   return result.results.channels[0].alternatives[0].words
+    // })
 
     // Make images promting by using from Script
-    const GenerateImagePrompts = await step.run(
-      "generate-image-prompts",
-      async () => {
-        const FINAL_PROMPTS = ImagePromptScript.replace(
-          "{style}",
-          videoStyle
-        ).replace("{script}", script);
+    // const GenerateImagePrompts = await step.run(
+    //   "generate-image-prompts",
+    //   async () => {
+    //     const FINAL_PROMPTS = ImagePromptScript.replace(
+    //       "{style}",
+    //       videoStyle
+    //     ).replace("{script}", script);
 
-        const result = await ImagePromptFunction(FINAL_PROMPTS); // ✅ FIXED USAGE
+    //     const result = await ImagePromptFunction(FINAL_PROMPTS); // ✅ FIXED USAGE
 
-        // Genreate images
-      
+    //     // Genreate images
 
-        return result;
-      }
-    );
+    //     return result;
+    //   }
+    // );
 
-      const GenerateImages = await step.run("generate-images", async () => {
-          let images = [];
-          images = await Promise.all(
-            GenerateImagePrompts.map(async (ele) => {
-              const result = await axios.post(
-                BASE_URL + "/api/generate-image",
-                {
-                  width: 1024,
-                  height: 1024,
-                  input: ele.imagePrompt,
-                  model: "sdxl", //'flux'
-                  aspectRatio: "1:1", //Applicable to Flux model only
-                },
-                {
-                  headers: {
-                    "x-api-key": process.env.NEXT_PUBLIC_AI_GURU_LAB, // Your API Key
-                    "Content-Type": "application/json", // Content Type
-                  },
-                }
-              );
-                        return result.data.image
+    // const GenerateImages = await step.run("generate-images", async () => {
+    //     let images = [];
+    //     images = await Promise.all(
+    //       GenerateImagePrompts.map(async (ele) => {
+    //         const result = await axios.post(
+    //           BASE_URL + "/api/generate-image",
+    //           {
+    //             width: 1024,
+    //             height: 1024,
+    //             input: ele.imagePrompt,
+    //             model: "sdxl", //'flux'
+    //             aspectRatio: "1:1", //Applicable to Flux model only
+    //           },
+    //           {
+    //             headers: {
+    //               "x-api-key": process.env.NEXT_PUBLIC_AI_GURU_LAB, // Your API Key
+    //               "Content-Type": "application/json", // Content Type
+    //             },
+    //           }
+    //         );
+    //                   return result.data.image
 
-            })
-          );
-          return images
-        });
+    //       })
+    //     );
+    //     return images
+    //   });
 
-        // Save all data in DB
-    return GenerateImages;
+    // Save all data in DB
+
+    console.log(recordId, "recordIdrecordIdrecordId");
+
+    const UpdateDB = await step.run("UpdateDB", async () => {
+      if (!recordId) throw new Error("Missing recordId");
+
+      const result = await convex.mutation(api.videoData.UpdateVideoRecord, {
+        recordId: recordId, // ✅ must be a valid Convex Id<"videoData">
+        audioUrl: "",
+        captionsJson: [],
+        images: [],
+      });
+
+      return result;
+    });
+
+    return UpdateDB;
   }
 );
