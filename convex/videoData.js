@@ -9,10 +9,10 @@ export const CreateVideoData = mutation({
     videoStyle: v.string(),
     voice: v.string(),
     script: v.string(),
-    captionsJson: v.optional(v.string()),
+    captionsJson: v.optional(v.any()),
     uid: v.id("users"),
     createdBy: v.string(),
-    images: v.optional(v.string()),
+    images: v.optional(v.any()),
     audioUrl: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
@@ -28,6 +28,7 @@ export const CreateVideoData = mutation({
       createdBy: args.createdBy,
       images: args.images,
       audioUrl: args.audioUrl,
+      status:"P"
     });
     return result;
   },
@@ -42,8 +43,9 @@ export const UpdateVideoRecord = mutation({
   handler: async (ctx, args) => {
     const result = await ctx.db.patch(args.recordId, {
       audioUrl: args.audioUrl,
-      captionsJson: args.captionsJson,
-      images: args.images,
+       images: args.images,
+      captionsJson: args.captionsJson ,
+      status:"C"   
     });
     return result;
   },

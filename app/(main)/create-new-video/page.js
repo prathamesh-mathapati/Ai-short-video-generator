@@ -52,10 +52,8 @@ const CreateNewVideo = () => {
         images: formData?.images,
         audioUrl: formData?.audioUrl,
       });
-      console.log(resp,"resprespresprespresp");
       
-
-      await axios.post("/api/genrate-video-data", { ...formData,recordId :resp});
+        await axios.post("/api/genrate-video-data", { ...formData,recordId :resp});    
     } catch (err) {
       console.error("API error:", err);
     } finally {

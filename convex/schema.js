@@ -18,7 +18,8 @@ export default defineSchema({
         captionsJson:  v.optional(v.any()),
         uid: v.id("users"),
         createdBy: v.string(),
-        images: v.optional(v.string()),
+        images: v.optional(v.any()),
         audioUrl: v.optional(v.string()),
+        status:v.optional(v.string())
     })
 })
