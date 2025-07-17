@@ -11,6 +11,7 @@ import axios from "axios";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { useAuthContext } from "@/app/provider";
+import { toast } from "sonner";
 
 const CreateNewVideo = () => {
   const [formData, setFormData] = useState({});
@@ -26,6 +27,7 @@ const CreateNewVideo = () => {
   };
 
   const GenerateVideo = async () => {
+    if(user?.credits<=0) return toast("Please add more credits!")
     if (
       !formData?.Title ||
       !formData?.caption ||
@@ -51,9 +53,13 @@ const CreateNewVideo = () => {
         createdBy: user?.email,
         images: formData?.images,
         audioUrl: formData?.audioUrl,
+        credits: user?.credits,
       });
-      
-        await axios.post("/api/genrate-video-data", { ...formData,recordId :resp});    
+
+      await axios.post("/api/genrate-video-data", {
+        ...formData,
+        recordId: resp,
+      });
     } catch (err) {
       console.error("API error:", err);
     } finally {

@@ -1,5 +1,5 @@
 import { v } from "convex/values";
-import { mutation } from "./_generated/server";
+import { mutation, query } from "./_generated/server";
 
 export const CreateVideoData = mutation({
   args: {
@@ -14,6 +14,7 @@ export const CreateVideoData = mutation({
     createdBy: v.string(),
     images: v.optional(v.any()),
     audioUrl: v.optional(v.string()),
+    credits: v.optional(v.number()),
   },
   handler: async (ctx, args) => {
     const result = await ctx.db.insert("videoData", {
@@ -28,8 +29,13 @@ export const CreateVideoData = mutation({
       createdBy: args.createdBy,
       images: args.images,
       audioUrl: args.audioUrl,
-      status:"P"
+      status: "P",
     });
+
+    await ctx.db.patch(args.uid, {
+      credits: args.credits - 1,
+    });
+
     return result;
   },
 });
@@ -43,10 +49,30 @@ export const UpdateVideoRecord = mutation({
   handler: async (ctx, args) => {
     const result = await ctx.db.patch(args.recordId, {
       audioUrl: args.audioUrl,
-       images: args.images,
-      captionsJson: args.captionsJson ,
-      status:"C"   
+      images: args.images,
+      captionsJson: args.captionsJson,
+      status: "C",
     });
     return result;
   },
 });
+
+export const GetVideoData = query({
+  args: {
+    uid: v.id("users"),
+  },
+  handler:async(ctx,args)=>{
+    const result = await ctx.db.query("videoData").filter(q=>q.eq(q.field("uid"),args.uid)).order("desc").collect()
+    return result
+  }
+});
+
+export const GetVideoByID= query({
+  args:{
+    videoId:v.id("videoData")
+  },
+  handler: async (ctx,args) => {
+    const result= await ctx.db.get(args?.videoId)
+    return result
+  }
+})
