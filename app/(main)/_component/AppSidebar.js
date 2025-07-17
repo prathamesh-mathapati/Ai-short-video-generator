@@ -1,4 +1,5 @@
 "use client"
+import { useAuthContext } from "@/app/provider";
 import { Button } from "@/components/ui/button";
 import {
   Sidebar,
@@ -25,6 +26,8 @@ const MenuItems = [
 ];
 
 export const AppSidebar = () => {
+    const { user } = useAuthContext();
+  
   const path=usePathname()
   return (
     <Sidebar>
@@ -67,7 +70,7 @@ export const AppSidebar = () => {
           <div className="flex items-center justify-between">
             <Gem className="text-gray-400"/>
             <h2 className="text-gray-400">
-              5 Credits Left
+            {user?.credits} Credits Left
             </h2>
           </div>
           <Button className=

@@ -21,7 +21,7 @@ const DashboardProvider = ({ children }) => {
       {" "}
       <SidebarProvider>
         <AppSidebar />
-        <div className="w-full">
+        <div className="w-full ">
           <AppHeder />
           {children}
         </div>

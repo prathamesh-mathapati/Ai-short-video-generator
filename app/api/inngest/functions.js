@@ -32,7 +32,7 @@ export const GenerateVideoData = inngest.createFunction(
   { id: "my-app-generate-video-data" },
   { event: "generate-video-data" },
   async ({ event, step }) => {
-    const { script, voice, videoStyle, recordId,creadits } = event?.data;
+    const { script, voice, videoStyle, recordId,credits } = event?.data;
     //  Make API call to generate audio
     const GenerateAudioFile = await step.run(
       "generate-video-data",
@@ -55,7 +55,7 @@ export const GenerateVideoData = inngest.createFunction(
       }
     );
 
-    // Make API captions to deepgram
+    // // Make API captions to deepgram
     const GenerateCaptions = await step.run(
       "generate-caption-data",
       async () => {
@@ -75,7 +75,7 @@ export const GenerateVideoData = inngest.createFunction(
       }
     );
 
-    // Make images promting by using from Script
+    // // Make images promting by using from Script
     const GenerateImagePrompts = await step.run(
       "generate-image-prompts",
       async () => {
@@ -124,8 +124,6 @@ export const GenerateVideoData = inngest.createFunction(
 
     const UpdateDB = await step.run("update-dB", async () => {
       if (!recordId) throw new Error("Missing recordId");
-      console.log(recordId, "recordIdrecordIdrecordId");
-
       const result = await convex.mutation(api.videoData.UpdateVideoRecord, {
         recordId: recordId, // ✅ must be a valid Convex Id<"videoData">
         audioUrl: GenerateAudioFile,
