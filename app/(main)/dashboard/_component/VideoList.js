@@ -14,7 +14,8 @@ export const VideoList = () => {
   const { user } = useAuthContext();
   const convex = useConvex();
   const GetUserVideoList = async () => {
-    const result = await convex.query(api.videoData.GetVideoData, {
+   
+    const result =user?._id && await convex.query(api.videoData.GetVideoData, {
       uid: user._id,
     });
     const isPendingVideo = result?.find((item) => item?.status === "P");
