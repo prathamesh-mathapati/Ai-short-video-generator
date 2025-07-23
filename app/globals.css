@@ -116,6 +116,7 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
@@ -144,9 +145,15 @@
     --sidebar-ring: oklch(0.439 0 0);
   }
 }
-button{
-cursor: pointer;
+
+button {
+  cursor: pointer;
 }
-.bg-secondary{
-    background-color: #2f2f2f;
+
+.bg-secondary {
+  background-color: #2f2f2f;
+}
+
+.paypal-button-tagline .paypal-button-text {
+  display: none !important;
 }

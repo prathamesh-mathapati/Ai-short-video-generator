@@ -3,8 +3,8 @@ import { mutation } from "./_generated/server";
 
 export const CreateNewUser = mutation({
   args: {
-    name: v.string(),
-    email: v.string(),
+    name: v.optional(v.string()),
+    email: v.optional(v.string()),
     pictureURL: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
@@ -29,3 +29,13 @@ export const CreateNewUser = mutation({
     return user[0];
   },
 });
+
+export const GetUpdateCreated=mutation({
+  args:{uid:v.id("user"),credits:v.number()},
+  handler:async(ctx,args)=>{
+    const result=await ctx.db.patch(args.uid,{
+      credits:args?.credits
+    })
+    return result
+  }
+})

@@ -17,7 +17,7 @@ const RemotionPlayer = ({ videoData }) => {
         controls
         inputProps={{
           videoData: videoData,
-          setDurationInFrames: (frameValue) => setDurationInFrames(frameValue),
+          setDurationInFrames: setDurationInFrames,
         }}
         style={{
           width: "25vw",
