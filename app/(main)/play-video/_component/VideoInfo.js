@@ -4,13 +4,12 @@ import Link from 'next/link'
 import React from 'react'
 
 const VideoInfo = ({videoData}) => {
-  console.log(videoData,"videoDatavideoDatavideoData");
   
   
   return (
     <div className='p-5 border rounded-xl'>
 
-      <Link href={"dashboard"}>
+      <Link href={"/dashboard"}>
       <h2><ArrowLeft/> Back to Dashboard</h2>
       </Link>
       <div className='flex flex-col gap-3'>
