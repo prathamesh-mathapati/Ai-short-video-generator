@@ -15,12 +15,9 @@ export async function POST(req) {
         apiKey: process.env.NEXT_PUBLIC_GEMINI_API_KEY,
     });
 
-    const config = {
-        thinkingConfig: {
-            thinkingBudget: -1,
-        },
-        responseMimeType: 'application/json',
-    };
+  const config = {
+    responseMimeType: 'application/json',
+};
 
     const contents = [
         {
@@ -29,7 +26,7 @@ export async function POST(req) {
         },
     ];
 
-    const model = 'gemini-2.5-flash-preview-04-17';
+    const model = 'gemini-1.5-flash';
     const stream = await ai.models.generateContentStream({
         model,
         config,

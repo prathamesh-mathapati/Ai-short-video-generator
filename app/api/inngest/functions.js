@@ -8,14 +8,14 @@ import { api } from "@/convex/_generated/api";
 const ImagePromptScript = `Generate Image prompt of {style} style with all deatils for each scene for 30 seconds video : script: {script}
 Just Give specifing image prompt depends on the story line
 do not give camera angle image prompt
-Follow the Folowing schema and return JSON data (Max 4-5 Images)
-{
+Follow the Folowing schema and return JSON data (Max 6-8 Images)
+[{
 
   imagePrompt:'',
 
   sceneContent: '<Script Content>'
 
-}`;
+}]`;
 
 export const helloWorld = inngest.createFunction(
   { id: "hello-world" },

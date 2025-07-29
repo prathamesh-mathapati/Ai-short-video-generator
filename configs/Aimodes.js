@@ -5,13 +5,9 @@ const genAI = new GoogleGenAI({
 });
 
 export default async function ImagePromptFunction(imagePrompt) {
-  const config = {
-    thinkingConfig: {
-      thinkingBudget: -1,
-    },
+const config = {
     responseMimeType: "application/json",
   };
-
   const contents = [
     {
       role: "user",
@@ -19,7 +15,7 @@ export default async function ImagePromptFunction(imagePrompt) {
     },
   ];
 
-  const model = "gemini-2.5-flash-preview-04-17";
+  const model = "gemini-1.5-flash";
 
   const stream = await genAI.models.generateContentStream({
     model,
