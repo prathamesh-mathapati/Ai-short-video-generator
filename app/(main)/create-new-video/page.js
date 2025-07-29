@@ -11,15 +11,15 @@ import axios from "axios";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { useAuthContext } from "@/app/provider";
-import { toast } from "sonner";
+import { toast, Toaster } from "sonner";
 import { useRouter } from "next/navigation";
 
 const CreateNewVideo = () => {
-  const [formData, setFormData] = useState({topic: 'Historic Story'});
+  const [formData, setFormData] = useState({ topic: 'Historic Story' });
   const [loading, setLoading] = useState(false);
   const CreateInitialVideoRecore = useMutation(api.videoData.CreateVideoData);
   const { user } = useAuthContext();
-  const router=useRouter()
+  const router = useRouter()
 
   const onHandleInputChange = (filedName, filedValue) => {
     setFormData((prev) => ({
@@ -30,53 +30,55 @@ const CreateNewVideo = () => {
 
 
   const GenerateVideo = async () => {
-  if (user?.credits <= 0) {
-    toast.error("Please add more credits!");
-    return;
-  }
+    if (user?.credits <= 0) {
+      toast.error("Please add more credits!");
+      return;
+    }
 
-  const missingFields = [];
+    const missingFields = [];
 
-  if (!formData?.Title) missingFields.push("Title");
-  if (!formData?.caption) missingFields.push("Caption");
-  if (!formData?.videoStyle) missingFields.push("Video Style");
-  if (!formData?.voice) missingFields.push("Voice");
+    if (!formData?.Title) missingFields.push("Title");
+    if (!formData?.script) missingFields.push("Script");
+    if (!formData?.caption) missingFields.push("Caption");
+    if (!formData?.videoStyle) missingFields.push("Video Style");
+    if (!formData?.voice) missingFields.push("Voice");
 
-  if (missingFields.length > 0) {
-    toast.error(`Please fill out: ${missingFields.join(", ")}`);
-    return;
-  }
+    if (missingFields.length > 0) {
+      toast.error(`Please fill out: ${missingFields.join(", ")}`);
+      return;
+    }
 
-  try {
-    setLoading(true);
-    const resp = await CreateInitialVideoRecore({
-      title: formData?.Title,
-      caption: formData?.caption,
-      topic: formData?.topic,
-      videoStyle: formData?.videoStyle,
-      voice: formData?.voice,
-      script: formData?.script,
-      captionsJson: formData?.captionsJson,
-      uid: user?._id,
-      createdBy: user?.email,
-      images: formData?.images,
-      audioUrl: formData?.audioUrl,
-      credits: user?.credits,
-    });
+    try {
+      setLoading(true);
+      const resp = await CreateInitialVideoRecore({
+        title: formData?.Title,
+        caption: formData?.caption,
+        topic: formData?.topic,
+        videoStyle: formData?.videoStyle,
+        voice: formData?.voice,
+        script: formData?.script,
+        captionsJson: formData?.captionsJson,
+        uid: user?._id,
+        createdBy: user?.email,
+        images: formData?.images,
+        audioUrl: formData?.audioUrl,
+        credits: user?.credits,
+      });
 
-    await axios.post("/api/genrate-video-data", {
-      ...formData,
-      recordId: resp,
-    });
+      await axios.post("/api/genrate-video-data", {
+        ...formData,
+        recordId: resp,
+      });
 
-    router.push("/dashboard");
-  } catch (err) {
-    console.error("API error:", err);
-    toast.error("Something went wrong while generating the video.");
-  } finally {
-    setLoading(false);
-  }
-};
+      router.push("/dashboard");
+    } catch (err) {
+      console.error("API error:", err);
+      toast.error("Something went wrong while generating the video.");
+    } finally {
+      setLoading(false);
+    }
+  };
+  console.log(formData, "formDataformData");
 
 
   return (
@@ -112,6 +114,7 @@ const CreateNewVideo = () => {
           <Preview formData={formData} />
         </div>
       </div>
+      <Toaster />
     </div>
   );
 };
