@@ -14,10 +14,11 @@ export const VideoList = () => {
   const { user } = useAuthContext();
   const convex = useConvex();
   const GetUserVideoList = async () => {
-   
-    const result =user?._id && await convex.query(api.videoData.GetVideoData, {
-      uid: user._id,
-    });
+    const result =
+      user?._id &&
+      (await convex.query(api.videoData.GetVideoData, {
+        uid: user._id,
+      }));
     const isPendingVideo = result?.find((item) => item?.status === "P");
     isPendingVideo && GetPendingVideoStatus(isPendingVideo);
     setVideoList(result);
@@ -34,11 +35,10 @@ export const VideoList = () => {
       });
       if (result?.status == "C") {
         clearInterval(intervalId);
-        console.log("Video Process Completed")
-        GetUserVideoList()
+        console.log("Video Process Completed");
+        GetUserVideoList();
       }
       console.log("Still Pending...");
-
     }, 5000);
   };
 
@@ -70,8 +70,7 @@ export const VideoList = () => {
                 </Link>
               ) : (
                 <div className="aspect-[2/3] p-5 w-full rounded-xl bg-slate-500 flex items-center justify-center gap-2">
-                  <RefreshCcw className="animate-spin" />{" "}
-                  <h2>Generating...</h2>
+                  <RefreshCcw className="animate-spin" /> <h2>Generating...</h2>
                 </div>
               )}
               <div className="bottom-3 px-5 w-full absolute">

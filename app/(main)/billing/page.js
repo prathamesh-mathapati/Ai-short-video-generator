@@ -42,30 +42,30 @@ const Billing = (item) => {
     }
     return (
         <div className="p-10">
-            <h2 class="font-bold text-3xl">Credits</h2>
-            <div class="p-4 border  rounded-xl flex justify-between  mt-7 max-w-2xl">
+            <h2 className="font-bold text-3xl">Credits</h2>
+            <div className="p-4 border  rounded-xl flex justify-between  mt-7 max-w-2xl">
                 <div>
-                    <h2 class=" font-bold text-xl">Total Credits Left</h2>
-                    <h2 class="text-sm">1 Credits = 1 Video</h2>
+                    <h2 className=" font-bold text-xl">Total Credits Left</h2>
+                    <h2 className="text-sm">1 Credits = 1 Video</h2>
                 </div>
-                <h2 class="font-bold text-3xl ">2 Credits</h2>
+                <h2 className="font-bold text-3xl ">2 Credits</h2>
             </div>
-            <p class="text-sm p-5 text-gray-500 max-w-2xl">
+            <p className="text-sm p-5 text-gray-500 max-w-2xl">
                 When your credit balance reaches $0, your Video generation will stop
                 working. Add Credits balance topped up.
             </p>
-            <div class="mt-5">
-                <h2 class="font-bold text-2xl">Buy More Credits</h2>
-                <div class="">
+            <div className="mt-5">
+                <h2 className="font-bold text-2xl">Buy More Credits</h2>
+                <div className="">
                     {
                         creditPlans.map((item, index) => (
-                            <div class="p-5 mt-3 border rounded-xl max-w-2xl flex justify-between items-center">
-                                <h2 class=" text-xl flex gap-2 items-center">
+                            <div className="p-5 mt-3 border rounded-xl max-w-2xl flex justify-between items-center" key={index}>
+                                <h2 className=" text-xl flex gap-2 items-center">
                                     <CircleDollarSign />
                                     <strong>{item.credits}</strong> Credits
                                 </h2>
-                                <div class="flex gap-2 items-center">
-                                    <h2 class="font-medium text-xl">{item?.cost} $</h2>
+                                <div className="flex gap-2 items-center">
+                                    <h2 className="font-medium text-xl">{item?.cost} $</h2>
                                     <PayPalButtons style={{ layout: "horizontal", tagline: false }}
                                         onCancel={() => console.log("Cancel")}
                                         onApprove={()=>onApprove(item)}
