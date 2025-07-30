@@ -25,7 +25,7 @@ const VideoInfo = ({ videoData }) => {
                   opacity-0 group-hover:opacity-100 
                   transition-opacity duration-300 z-10 pointer-events-none"
           >
-           Upgrade your account to enable downloads.
+            Upgrade your account to enable downloads.
           </div>
 
           <Button disabled className="cursor-not-allowed w-full">
