@@ -78,7 +78,6 @@ const CreateNewVideo = () => {
       setLoading(false);
     }
   };
-  console.log(formData, "formDataformData");
 
 
   return (

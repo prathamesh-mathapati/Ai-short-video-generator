@@ -61,18 +61,29 @@ export const GetVideoData = query({
   args: {
     uid: v.id("users"),
   },
-  handler:async(ctx,args)=>{
-    const result = await ctx.db.query("videoData").filter(q=>q.eq(q.field("uid"),args.uid)).order("desc").collect()
-    return result
-  }
+  handler: async (ctx, args) => {
+    const result = await ctx.db
+      .query("videoData")
+      .filter((q) => q.eq(q.field("uid"), args.uid))
+      .order("desc")
+      .collect();
+    return result;
+  },
 });
 
-export const GetVideoByID= query({
-  args:{
-    videoId:v.id("videoData")
+export const GetVideoByID = query({
+  args: {
+    videoId: v.id("videoData"),
   },
-  handler: async (ctx,args) => {
-    const result= await ctx.db.get(args?.videoId)
-    return result
-  }
-})
+  handler: async (ctx, args) => {
+    const result = await ctx.db.get(args?.videoId);
+    return result;
+  },
+});
+
+export const GetAllVideo = query({
+  handler: async (ctx, args) => {
+    const result = await ctx.db.query("videoData").order("desc").take(12);
+    return result;
+  },
+});
